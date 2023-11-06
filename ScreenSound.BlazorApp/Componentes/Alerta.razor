@@ -1,0 +1,26 @@
+﻿@if (Exibir==true)
+{
+    <div style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background-color: #fff; border: 1px solid #ccc; border-radius: 5px; padding: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); max-width: 80%; overflow: auto;">
+            <h2 style="font-size: 24px; margin-bottom: 10px;">Cadastro de Artista</h2>
+            <p style="font-size: 16px; margin-bottom: 20px;">@Conteudo</p>
+           @* <button style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; font-size: 16px;" onclick="FecharModal()">Fechar</button>*@
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public bool Exibir { get; set; }
+
+    [Parameter]
+    public string? Conteudo { get; set; }
+
+    bool exibirModal = false;
+
+    void FecharModal()
+    {
+        exibirModal = false;
+    }
+}

@@ -1,0 +1,38 @@
+﻿@inject ArtistasAPI artistasAPI
+@inject MusicasAPI musicasAPI
+
+<h3>Últimos artistas cadastrados...</h3>
+@if(Artistas is not null)
+{
+    @foreach (var item in Artistas.OrderByDescending(a=>a.Id).Take(5))
+    {
+        <div class="artist-card bordered-div">
+            <div class="artist-name">@item.Nome</div>
+            <div class="artist-description">@item.Bio</div>
+        </div>
+
+    }     
+}
+
+<h3>Últimas músicas cadastrados...</h3>
+@if (Musicas is not null)
+{
+    @foreach (var item in Musicas.OrderByDescending(a => a.Id).Take(5))
+    {
+        <div class="music-card bordered-div">
+            <div class="music-title">@item.Nome</div>
+            <div class="genre">Gênero: @item.Genero</div>
+        </div>
+    }     
+}
+
+@code {
+     public List<Artista>? Artistas { get; set; }
+     public List<Musica>? Musicas { get; set; }
+
+     protected override async Task OnInitializedAsync()
+     {
+          Artistas = await artistasAPI.GetArtistasAsync();
+          Musicas = await musicasAPI.GetMusicasAsync();
+     }
+}

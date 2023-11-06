@@ -1,0 +1,54 @@
+﻿@inject NavigationManager navigationManager
+@inject ILogger<FormArtista> Logger
+@inject ArtistasAPI artistasAPI
+
+<EditForm Model="Artista" OnValidSubmit="CadastrarArtista" >
+    <DataAnnotationsValidator />
+    <div class="row">
+        <input type="hidden" @bind-value="Artista.Id" />
+        <div class="form-group col-12 mt-3">
+            <label class="form-label" for="nome">Nome:</label>
+            <InputText id="nome" @bind-Value="Artista.Nome" class="form-control"></InputText>
+            <ValidationMessage For="() => Artista.Nome"/>
+        </div>
+        <div class="form-group col-12 mt-3">
+            <label class="form-label" for="bio">Biografia:</label>
+            <InputTextArea id="bio" @bind-Value="Artista.Bio" class="form-control"></InputTextArea>
+            <ValidationMessage For="() => Artista.Bio" />
+        </div>
+        <div class="col-12 mt-3">
+            <button type="button" class="btn btn-outline-warning" @onclick="VoltarParaListagem">Voltar</button>
+            <button type="submit" class="btn btn-primary">Gravar</button>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public Artista? Artista { get; set; }
+
+    private string submitMessage = string.Empty;
+
+    private void VoltarParaListagem()
+    {
+        navigationManager.NavigateTo("/");
+    }
+
+    private async Task CadastrarArtista()
+    {
+        try
+        {
+            await artistasAPI.AddArtistaAsync(Artista!);
+            Logger.LogInformation("Dados cadastrados com sucesso");     
+            Thread.Sleep(5000);
+            navigationManager.NavigateTo("/");
+        }
+        catch (Exception)
+        {
+            Logger.LogInformation("Erro ao cadastrar artista!");        
+        }
+      
+     }
+
+}

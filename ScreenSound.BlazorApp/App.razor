@@ -1,0 +1,15 @@
+﻿<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p role="alert">Desculpe, nada encontrado neste endereço!</p>
+            <img src="https://media.giphy.com/media/EeIX8IZvvGZ2CRCWSO/giphy.gif" alt="404" />
+        </LayoutView>
+
+    </NotFound>
+    
+</Router>
