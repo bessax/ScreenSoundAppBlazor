@@ -1,0 +1,9 @@
+﻿<div class="artist-card bordered-div">
+    <div class="artist-name">@Item.Nome</div>
+    <div class="artist-description">@Item.Bio</div>
+</div>
+
+@code {
+     [Parameter]
+     public Artista? Item { get; set; }
+}

@@ -1,4 +1,5 @@
-﻿@inject ArtistasAPI artistasAPI
+﻿@page "/"
+@inject ArtistasAPI artistasAPI
 @inject MusicasAPI musicasAPI
 
 <h3>Últimos artistas cadastrados...</h3>
@@ -6,11 +7,7 @@
 {
     @foreach (var item in Artistas.OrderByDescending(a=>a.Id).Take(5))
     {
-        <div class="artist-card bordered-div">
-            <div class="artist-name">@item.Nome</div>
-            <div class="artist-description">@item.Bio</div>
-        </div>
-
+       <CardArtista Item="item"/>
     }     
 }
 
@@ -19,10 +16,7 @@
 {
     @foreach (var item in Musicas.OrderByDescending(a => a.Id).Take(5))
     {
-        <div class="music-card bordered-div">
-            <div class="music-title">@item.Nome</div>
-            <div class="genre">Gênero: @item.Genero</div>
-        </div>
+        <CardMusica Item="item" />
     }     
 }
 

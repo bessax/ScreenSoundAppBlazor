@@ -1,0 +1,33 @@
+﻿.artist-card {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.artist-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.artist-genre {
+    font-size: 14px;
+}
+
+.artist-albums {
+    font-size: 14px;
+    color: #777;
+}
+
+.artist-description {
+    font-size: 14px;
+}
+
+.bordered-div {
+    width: 200px;
+    height: 100px;
+    border: 2px solid #333; /* Define uma borda de 2px de largura na cor #333 (cinza escuro) */
+    padding: 10px; /* Adiciona espaço interno para que o conteúdo não encoste na borda */
+}

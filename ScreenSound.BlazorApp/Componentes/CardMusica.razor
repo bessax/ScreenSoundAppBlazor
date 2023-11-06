@@ -1,0 +1,8 @@
+﻿<div class="music-card bordered-div">
+    <div class="music-title">@Item.Nome</div>
+    <div class="genre">Gênero: @Item.Genero</div>
+</div>
+
+@code {
+    [Parameter] public Musica? Item { get; set; }
+}
