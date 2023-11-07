@@ -41,3 +41,8 @@
     border: 2px solid #333; /* Define uma borda de 2px de largura na cor #333 (cinza escuro) */
     padding: 10px; /* Adiciona espaço interno para que o conteúdo não encoste na borda */
 }
+
+#div {
+    float: left;
+    width: 50%;
+}

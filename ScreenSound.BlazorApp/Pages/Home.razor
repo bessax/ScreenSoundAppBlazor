@@ -1,28 +1,31 @@
 ﻿@page "/"
 @inject ArtistasAPI artistasAPI
 @inject MusicasAPI musicasAPI
-
 <h1>Últimos artistas cadastrados...</h1>
+<br />
+<br />
 @if(Artistas is not null)
 {
     <MudGrid>
         @foreach (var item in Artistas.OrderByDescending(a=>a.Id).Take(5))
         {
            <CardArtista Item="item"/>
-        }    
+        }   
 
-    </MudGrid>
-     
+    </MudGrid>     
 }
 <br/>
+<h1>Últimas músicas cadastradas...</h1>
 <br />
-<h1>Últimas músicas cadastrados...</h1>
+<br />
 @if (Musicas is not null)
 {
-    @foreach (var item in Musicas.OrderByDescending(a => a.Id).Take(5))
-    {
-        <CardMusica Item="item" />
-    }     
+    <MudGrid>
+        @foreach (var item in Musicas.OrderByDescending(a => a.Id).Take(5))
+        {
+            <CardMusica Item="item" />
+        }
+    </MudGrid>
 }
 
 @code {

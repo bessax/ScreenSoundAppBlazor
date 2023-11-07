@@ -1,0 +1,37 @@
+﻿@inject NavigationManager navigationManager
+@inject ILogger<FormArtista> Logger
+@inject ArtistasAPI artistasAPI
+<MudForm>
+    <MudTextField Label="Nome" @bind-Value="Artista.Nome" />
+    <MudTextField Label="Biografia" @bind-Value="Artista.Bio" />
+    <MudButton Variant="Variant.Filled" Color="Color.Info" @onclick="VoltarParaListagem">Voltar</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="CadastrarArtista">Gravar</MudButton>
+</MudForm>
+
+@code {
+    [Parameter]
+    public Artista? Artista { get; set; }
+    private string submitMessage = string.Empty;
+
+    private void VoltarParaListagem()
+    {
+        navigationManager.NavigateTo("/");
+    }
+
+    private async Task CadastrarArtista()
+    {
+        try
+        {
+            await artistasAPI.AddArtistaAsync(Artista!);
+            Logger.LogInformation("Dados cadastrados com sucesso");
+            Thread.Sleep(5000);
+            navigationManager.NavigateTo("/");
+        }
+        catch (Exception)
+        {
+            Logger.LogInformation("Erro ao cadastrar artista!");
+        }
+
+    }
+
+}

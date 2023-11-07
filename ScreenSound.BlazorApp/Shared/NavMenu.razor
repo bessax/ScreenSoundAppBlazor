@@ -1,5 +1,15 @@
 ﻿﻿<MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
+    <MudNavLink Href="/" Match="NavLinkMatch.All">Cadastros
+        <MudNavLink Href="/artistas/novo" Match="NavLinkMatch.All">
+            <MudIcon Icon=@Icons.Material.Filled.PersonAdd Color="Color.Primary" />
+            Artistas
+        </MudNavLink>
+        <MudNavLink Href="/musicas/novo" Match="NavLinkMatch.All">
+            <MudIcon Icon=@Icons.Material.Filled.MusicNote Color="Color.Primary" />
+            Musicas
+        </MudNavLink>
+    </MudNavLink>
 </MudNavMenu>
 
 @code {

@@ -1,0 +1,42 @@
+﻿@inject NavigationManager navigationManager
+@inject ILogger<FormArtista> Logger
+@inject ArtistasAPI artistasAPI
+<MudDialog>
+    <DialogContent>
+        <MudText>@ContentText</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="RemoverArtista">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+
+    [Parameter] public string? ContentText { get; set; }
+
+    [Parameter] public string? ButtonText { get; set; }
+
+    [Parameter] public Color Color { get; set; }
+
+    [Parameter] public Artista? artista { get; set; }
+
+    public async Task RemoverArtista() {
+        try
+        {
+            await artistasAPI.DeleteArtistaAsync(artista.Id);
+            Logger.LogInformation("Dados excluídos com sucesso");
+            Thread.Sleep(3000);
+            navigationManager.NavigateTo("/");
+        }
+        catch (Exception)
+        {
+            
+            throw;
+        }    
+       
+    }
+        
+    void Cancel() => MudDialog.Cancel();
+}
