@@ -1,12 +1,22 @@
 ﻿@inject NavigationManager navigationManager
 @inject ILogger<FormArtista> Logger
 @inject ArtistasAPI artistasAPI
-<MudForm>
-    <MudTextField Label="Nome" @bind-Value="Artista.Nome" />
-    <MudTextField Label="Biografia" @bind-Value="Artista.Bio" />
-    <MudButton Variant="Variant.Filled" Color="Color.Info" @onclick="VoltarParaListagem">Voltar</MudButton>
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="CadastrarArtista">Gravar</MudButton>
-</MudForm>
+<MudGrid>
+    <MudItem xs="12" sm="7">
+         <MudPaper Class="pa-4">
+            <MudForm>
+                <MudTextField T="string" Label="Nome" @bind-Value="Artista.Nome" Required="true" RequiredError="Campo nome deve ser preenchido!" />
+                <MudTextField T="string" Label="Biografia" @bind-Value="Artista.Bio" Required="true" RequiredError="Campo Bio deve ser preenchido!" />                
+               
+            </MudForm>
+        </MudPaper>
+        <MudPaper Class="pa-4 mt-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Info" @onclick="VoltarParaListagem">Voltar</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="CadastrarArtista">Gravar</MudButton>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
 
 @code {
     [Parameter]
@@ -22,6 +32,10 @@
     {
         try
         {
+            if (string.IsNullOrEmpty(Artista.Nome))
+            {
+                return; 
+            }
             await artistasAPI.AddArtistaAsync(Artista!);
             Logger.LogInformation("Dados cadastrados com sucesso");
             Thread.Sleep(5000);
@@ -33,5 +47,7 @@
         }
 
     }
+
+
 
 }
