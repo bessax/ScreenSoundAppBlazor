@@ -6,9 +6,23 @@
          <MudPaper Class="pa-4">
             <MudForm>
                 <MudTextField T="string" Label="Nome" @bind-Value="Artista.Nome" Required="true" RequiredError="Campo nome deve ser preenchido!" />
-                <MudTextField T="string" Label="Biografia" @bind-Value="Artista.Bio" Required="true" RequiredError="Campo Bio deve ser preenchido!" />                
+                <MudTextField T="string" Label="Biografia" @bind-Value="Artista.Bio" Required="true" RequiredError="Campo Bio deve ser preenchido!" />               
                
             </MudForm>
+            <MudCardContent>
+                <img src="@Artista!.FotoPerfil" />
+                <MudFileUpload T="IBrowserFile" Accept=".png, .jpg" FilesChanged="UploadFile" MaximumFileCount="100">
+                    <ButtonTemplate>
+                        <MudButton HtmlTag="label"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.PhotoCamera"
+                                   for="@context">
+                            Foto de Perfil
+                        </MudButton>
+                    </ButtonTemplate>
+                </MudFileUpload>
+            </MudCardContent>
         </MudPaper>
         <MudPaper Class="pa-4 mt-4">
             <MudButton Variant="Variant.Filled" Color="Color.Info" @onclick="VoltarParaListagem">Voltar</MudButton>
@@ -30,6 +44,7 @@
 
     private async Task CadastrarArtista()
     {
+
         try
         {
             if (string.IsNullOrEmpty(Artista.Nome))
@@ -41,11 +56,24 @@
             Thread.Sleep(5000);
             navigationManager.NavigateTo("/");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Logger.LogInformation("Erro ao cadastrar artista!");
+            Logger.LogInformation($"Erro ao cadastrar artista! [{ex.Message}]");
         }
 
+    }
+
+    IList<IBrowserFile> files = new List<IBrowserFile>();
+
+    private async Task UploadFile(IBrowserFile file)
+    {       
+
+        var format = "image/jpg";
+        var resizedImage = await file.RequestImageFileAsync(format, 200, 200);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        Artista!.FotoPerfil = imageData;
     }
 
 

@@ -13,7 +13,7 @@ public class ArtistaConverter
     public Artista RequestToEntityEdit(ArtistaRequestEdit artistaRequestEdit)
     {
         return new Artista(artistaRequestEdit.Nome, artistaRequestEdit.Bio) 
-        { Id = artistaRequestEdit.Id , FotoPerfil = artistaRequestEdit.FotoPerfil };
+        { Id = artistaRequestEdit.Id , FotoPerfil = null};
     }
 
     public ArtistaResponse EntityToResponse(Artista artista)

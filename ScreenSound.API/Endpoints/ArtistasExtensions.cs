@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using ScreenSound.API.DTO;
 using ScreenSound.API.Services;
 using ScreenSound.Shared.Banco;
@@ -14,9 +15,17 @@ public static class ArtistasExtensions
     public static void MapEndPointArtistas(this WebApplication app)
     {
 
-        app.MapPost("/Artistas",([FromServices] ArtistaConverter converter, [FromServices] EntityDAL<Artista> entityDAL, [FromBody] ArtistaRequest artistaReq) =>
+        app.MapPost("/Artistas", async([FromServices]IHostEnvironment env, [FromServices] ArtistaConverter converter, [FromServices] EntityDAL<Artista> entityDAL, [FromBody] ArtistaRequest artistaReq) =>
         {
-            entityDAL.Adicionar(converter.RequestToEntity(artistaReq));
+      
+            var path = Path.Combine(env.ContentRootPath,
+                "FotoPerfil", DateTime.Now.ToString("ddMMyyyyhhss")+artistaReq.Nome);
+
+            await using FileStream fs = new(path, FileMode.Create);
+            await artistaReq.FotoPerfil.CopyToAsync(fs);
+            var artista = converter.RequestToEntity(artistaReq);
+            artista.FotoPerfil = path;
+            entityDAL.Adicionar(artista);
         });
 
         app.MapGet("/Artistas", ([FromServices] ArtistaConverter converter, [FromServices] EntityDAL<Artista> entityDAL) =>

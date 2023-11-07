@@ -1,4 +1,5 @@
 ﻿using ScreenSound.Shared.Modelos;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace ScreenSound.BlazorApp.Servicos;
@@ -19,7 +20,19 @@ public class ArtistasAPI
     }
     public async Task AddArtistaAsync(Artista artista)
     {
-       await _httpClient.PostAsJsonAsync("artistas", artista);         
+        using var content = new MultipartFormDataContent();
+
+        byte[] data = Convert.FromBase64String(artista.FotoPerfil!);
+        
+        var fileContent = new ByteArrayContent(data);
+        
+        //fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+        
+        content.Add(fileContent, "fotoPerfil", "fotoPerfil");
+        content.Add(new StringContent(artista.Nome), "nome");
+        content.Add(new StringContent(artista.Bio), "bio");
+
+        await _httpClient.PostAsJsonAsync("artistas", content);         
     }
     public async Task UpdateArtistaAsync(Artista artista)
     {
