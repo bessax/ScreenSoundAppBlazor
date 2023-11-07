@@ -1,9 +1,60 @@
-﻿<div class="artist-card bordered-div">
-    <div class="artist-name">@Item.Nome</div>
-    <div class="artist-description">@Item.Bio</div>
-</div>
+﻿@inject NavigationManager Navigation
+@inject IDialogService DialogService
+
+<MudItem xs="3">
+    <MudCard>
+        <MudCardMedia Image=@Imagem Height="300" />
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Item.Nome</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudIconButton Title="Detalhes" Icon="@Icons.Material.Filled.Info" Color="Color.Default" />
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudText Typo="Typo.body2">@Item.Bio</MudText>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton @onclick="() => ConfirmarExclusao(Item)"
+                       Variant="Variant.Text"
+                       Color="Color.Secondary">
+                Excluir
+            </MudButton>
+            <MudSpacer></MudSpacer>
+            <MudRating SelectedValue="2" />
+        </MudCardActions>
+    </MudCard>
+</MudItem>
+
+<MudFab Style="position:fixed; bottom:30px;right:8px"
+        Title="Adiciona novo artista"
+        Size="Size.Large"
+        Color="Color.Secondary"
+        StartIcon="@Icons.Material.Filled.Add"
+@onclick="AdicionarArtista" />
 
 @code {
-     [Parameter]
-     public Artista? Item { get; set; }
+        [Parameter]
+        public Artista? Item { get; set; }
+
+        public Random random = new Random();
+
+        public string Imagem => $"img/cantor{random.Next(1,6)}.jpeg";
+
+        private void ConfirmarExclusao(Artista artista)
+        {
+            var parameters = new DialogParameters<DialogScreenSoundDeleteArtista>();
+            parameters.Add(x => x.ContentText, $"Deseja realmente excluir {artista.Nome}? O artista será excluído da base de dados.");
+            parameters.Add(x => x.ButtonText, "Excluir");
+            parameters.Add(x => x.Color, Color.Error);
+            parameters.Add(x=> x.artista, artista);
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+            DialogService.Show<DialogScreenSoundDeleteArtista>("Excluir Artista", parameters, options);
+        }
+
+        private void AdicionarArtista()
+        {
+            Navigation.NavigateTo("artistas/novo");
+        }
 }
