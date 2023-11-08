@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FotoPerfil\071120231023.Beto.jpg" />
+    <None Remove="FotoPerfil\071120231028.Beto.jpg" />
+    <None Remove="FotoPerfil\071120231048.Beto.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.12" />
     <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.1" />

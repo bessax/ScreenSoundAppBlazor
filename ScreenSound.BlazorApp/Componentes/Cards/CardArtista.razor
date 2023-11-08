@@ -36,23 +36,24 @@
 @onclick="AdicionarArtista" />
 
 @code {
-        [Parameter]
-        public Artista? Item { get; set; }
+    [Parameter]
+    public Artista? Item { get; set; }
 
-        public Random random = new Random();
+    public Random random = new Random();
 
-        public string Imagem => $"img/cantor{random.Next(1,6)}.jpeg";
+    public string Imagem => $"file:///C:/Users/Alura/Desktop/Projetos%20C%23%20BD%20e%20Web/BD/ScreenSoundv3/ScreenSound.API/FotoPerfil/071120231109.BetoBarbosa.jpg";
 
-        private void ConfirmarExclusao(Artista artista)
-        {
-            var parameters = new DialogParameters<DialogScreenSoundDeleteArtista>();
-            parameters.Add(x => x.ContentText, $"Deseja realmente excluir {artista.Nome}? O artista será excluído da base de dados.");
-            parameters.Add(x => x.ButtonText, "Excluir");
-            parameters.Add(x => x.Color, Color.Error);
-            parameters.Add(x=> x.artista, artista);
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+    private void ConfirmarExclusao(Artista artista)
+    {
+        var parameters = new DialogParameters<DialogScreenSoundDeleteArtista>();
+        parameters.Add(x => x.ContentText, $"Deseja realmente excluir {artista.Nome}? O artista será excluído da base de dados.");
+        parameters.Add(x => x.ButtonText, "Excluir");
+        parameters.Add(x => x.Color, Color.Error);
+        parameters.Add(x => x.artista, artista);
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<DialogScreenSoundDeleteArtista>("Excluir Artista", parameters, options);
         }
+              
 
         private void AdicionarArtista()
         {

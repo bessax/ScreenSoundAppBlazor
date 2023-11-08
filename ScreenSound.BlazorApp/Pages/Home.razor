@@ -9,7 +9,9 @@
     <MudGrid>
         @foreach (var item in Artistas.OrderByDescending(a=>a.Id).Take(5))
         {
-           <CardArtista Item="item"/>
+            Uri uri = new Uri(item.FotoPerfil);
+            item.FotoPerfil = uri.AbsoluteUri;
+            <CardArtista Item="item"/>      
         }   
 
     </MudGrid>     

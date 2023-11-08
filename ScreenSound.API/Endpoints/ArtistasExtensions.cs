@@ -6,6 +6,8 @@ using ScreenSound.API.DTO;
 using ScreenSound.API.Services;
 using ScreenSound.Shared.Banco;
 using ScreenSound.Shared.Modelos;
+using System.Buffers.Text;
+using System.Text;
 
 namespace ScreenSound.API.Endpoints;
 
@@ -17,12 +19,14 @@ public static class ArtistasExtensions
 
         app.MapPost("/Artistas", async([FromServices]IHostEnvironment env, [FromServices] ArtistaConverter converter, [FromServices] EntityDAL<Artista> entityDAL, [FromBody] ArtistaRequest artistaReq) =>
         {
-      
+            await Console.Out.WriteLineAsync("Cheguei no Endpoint!!!!!!!!");
+            var nome = artistaReq.Nome.Trim();
             var path = Path.Combine(env.ContentRootPath,
-                "FotoPerfil", DateTime.Now.ToString("ddMMyyyyhhss")+artistaReq.Nome);
+                "FotoPerfil", DateTime.Now.ToString("ddMMyyyyhhss")+"."+ nome + ".jpg");
 
-            await using FileStream fs = new(path, FileMode.Create);
-            await artistaReq.FotoPerfil.CopyToAsync(fs);
+            using MemoryStream ms = new MemoryStream(Convert.FromBase64String(artistaReq.FotoPerfil));
+            using FileStream fs = new(path, FileMode.Create);
+            await ms.CopyToAsync(fs);
             var artista = converter.RequestToEntity(artistaReq);
             artista.FotoPerfil = path;
             entityDAL.Adicionar(artista);
