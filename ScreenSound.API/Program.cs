@@ -61,6 +61,7 @@ builder.Services.AddTransient(typeof(TokenService));
 
 builder.Services.AddCors();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -71,7 +72,10 @@ app.UseCors(options =>
     .AllowAnyHeader();
 
 });
+
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 
@@ -82,6 +86,7 @@ app.MapEndPointAuthorizer();
 app.MapEndPointArtistas();
 
 app.MapEndPointMusicas();
+
 
 app.Run();
 

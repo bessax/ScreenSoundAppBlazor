@@ -41,8 +41,7 @@
 
     public Random random = new Random();
 
-    public string Imagem => $"file:///C:/Users/Alura/Desktop/Projetos%20C%23%20BD%20e%20Web/BD/ScreenSoundv3/ScreenSound.API/FotoPerfil/071120231109.BetoBarbosa.jpg";
-
+    public string Imagem => $"https://localhost:7016/{Item.FotoPerfil}";
     private void ConfirmarExclusao(Artista artista)
     {
         var parameters = new DialogParameters<DialogScreenSoundDeleteArtista>();

@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="FotoPerfil\071120231023.Beto.jpg" />
-    <None Remove="FotoPerfil\071120231028.Beto.jpg" />
-    <None Remove="FotoPerfil\071120231048.Beto.jpg" />
+    <None Remove="wwwroot\FotoPerfil\071120231023.Beto.jpg" />
+    <None Remove="wwwroot\FotoPerfil\071120231028.Beto.jpg" />
+    <None Remove="wwwroot\FotoPerfil\071120231048.Beto.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +21,11 @@
   <ItemGroup>
     <ProjectReference Include="..\ScreenSound.Shared.Data\ScreenSound.Shared.Data.csproj" />
     <ProjectReference Include="..\ScreenSound.Shared.Modelos\ScreenSound.Shared.Modelos.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\FotoPerfil\071120231109.betobarbosa.jpg" />
+    <None Include="wwwroot\FotoPerfil\071120231144.betobarbosa.jpg" />
   </ItemGroup>
 
 </Project>
